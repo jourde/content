@@ -1,0 +1,1077 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IA contre IA / AI vs AI</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --color-bg: #FAFAFA;
+            --color-surface: #FFFFFF;
+            --color-text: #111827;
+            --color-text-secondary: #6B7280;
+            --color-text-muted: #9CA3AF;
+            --color-border: #E5E7EB;
+            --color-border-light: #F3F4F6;
+            --color-primary: #2563EB;
+            --color-primary-light: #EFF6FF;
+            --color-primary-dark: #1D4ED8;
+            --color-success: #059669;
+            --color-success-light: #ECFDF5;
+            --color-warning: #D97706;
+            --color-warning-light: #FFFBEB;
+            --color-sidebar: #FFFFFF;
+            --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06);
+            --radius-md: 8px;
+            --radius-lg: 12px;
+            --transition: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: var(--font-family);
+            background: var(--color-bg);
+            color: var(--color-text);
+            line-height: 1.6;
+            min-height: 100vh;
+            font-size: 15px;
+        }
+
+        /* --- Language Switching Logic --- */
+        /* Par défaut (body sans classe) : FR visible, EN caché */
+        .lang-en { display: none !important; }
+        
+        /* Quand body a la classe 'en-mode' : FR caché, EN visible */
+        body.en-mode .lang-fr { display: none !important; }
+        body.en-mode .lang-en { display: block !important; } /* Block par défaut, ajusté inline si span */
+        body.en-mode span.lang-en { display: inline !important; }
+        
+        .lang-switch {
+            display: flex; gap: 4px; padding: 4px; background: var(--color-border-light); 
+            border-radius: 6px; margin: 16px 12px 0; justify-content: center;
+        }
+        .lang-btn {
+            border: none; background: transparent; font-size: 12px; font-weight: 600; 
+            padding: 4px 12px; border-radius: 4px; cursor: pointer; color: var(--color-text-secondary);
+            transition: all 0.2s;
+        }
+        .lang-btn.active { background: white; color: var(--color-primary); box-shadow: var(--shadow-sm); }
+
+        /* --- Layout --- */
+        .app-layout { display: flex; min-height: 100vh; }
+
+        /* --- Sidebar --- */
+        .sidebar {
+            width: 280px;
+            background: var(--color-sidebar);
+            border-right: 1px solid var(--color-border);
+            display: flex;
+            flex-direction: column;
+            position: fixed;
+            top: 0; left: 0; bottom: 0;
+            z-index: 100;
+            transition: transform 0.3s ease;
+        }
+
+        .sidebar-header { padding: 24px 24px 12px; border-bottom: 1px solid var(--color-border); }
+        .sidebar-logo { display: flex; align-items: center; gap: 12px; }
+        .sidebar-logo-icon {
+            width: 36px; height: 36px;
+            background: var(--color-primary);
+            border-radius: var(--radius-md);
+            display: flex; align-items: center; justify-content: center;
+            color: white; font-weight: 700;
+        }
+        .sidebar-logo-text { font-weight: 600; color: var(--color-text); }
+        .sidebar-logo-text span { color: var(--color-primary); }
+
+        .sidebar-nav { flex: 1; padding: 16px 12px; overflow-y: auto; }
+        .nav-section-label {
+            font-size: 11px; font-weight: 600; text-transform: uppercase;
+            color: var(--color-text-muted); padding: 8px 12px; margin-bottom: 4px;
+        }
+
+        .nav-item {
+            display: flex; align-items: center; gap: 12px;
+            padding: 10px 12px; border-radius: var(--radius-md);
+            font-size: 14px; font-weight: 500; color: var(--color-text-secondary);
+            cursor: pointer; transition: all var(--transition);
+            border: none; background: transparent; width: 100%; text-align: left;
+            margin-bottom: 2px;
+        }
+        .nav-item:hover { background: var(--color-border-light); color: var(--color-text); }
+        .nav-item.active { background: var(--color-primary-light); color: var(--color-primary); }
+        .nav-item.completed { color: var(--color-success); }
+
+        .nav-item-icon {
+            width: 20px; height: 20px; border-radius: 50%;
+            border: 2px solid currentColor;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 10px; font-weight: 600; flex-shrink: 0;
+        }
+        .nav-item.active .nav-item-icon { background: var(--color-primary); border-color: var(--color-primary); color: white; }
+        .nav-item.completed .nav-item-icon { background: var(--color-success); border-color: var(--color-success); color: white; }
+        .nav-item-icon svg { width: 12px; height: 12px; }
+
+        .sidebar-footer { padding: 16px 24px; border-top: 1px solid var(--color-border); }
+        .progress-label { display: flex; justify-content: space-between; font-size: 12px; color: var(--color-text-secondary); margin-bottom: 6px; }
+        .progress-bar { height: 4px; background: var(--color-border); border-radius: 2px; overflow: hidden; }
+        .progress-fill { height: 100%; background: var(--color-primary); border-radius: 2px; transition: width 0.3s ease; }
+
+        /* --- Mobile --- */
+        .mobile-header {
+            display: none; position: fixed; top: 0; left: 0; right: 0; height: 60px;
+            background: var(--color-surface); border-bottom: 1px solid var(--color-border);
+            z-index: 99; padding: 0 16px; align-items: center; justify-content: space-between;
+        }
+        .mobile-menu-btn { background: none; border: 1px solid var(--color-border); border-radius: var(--radius-md); width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; }
+        .mobile-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.3); z-index: 99; }
+
+        /* --- Main Content --- */
+        .main-content { flex: 1; margin-left: 280px; min-height: 100vh; }
+        .content-wrapper { max-width: 720px; margin: 0 auto; padding: 48px 32px; }
+        
+        .section { display: none; animation: fadeIn 0.3s ease; }
+        .section.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* --- Components --- */
+        .section-badge { display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; background: var(--color-primary-light); color: var(--color-primary); border-radius: 100px; font-size: 12px; font-weight: 600; margin-bottom: 16px; }
+        .section-title { font-size: 28px; font-weight: 700; color: var(--color-text); margin-bottom: 8px; line-height: 1.3; }
+        .section-subtitle { font-size: 16px; color: var(--color-text-secondary); margin-bottom: 32px; }
+
+        .card { background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-lg); padding: 24px; margin-bottom: 16px; transition: box-shadow var(--transition); }
+        .card:hover { box-shadow: var(--shadow-sm); }
+        .card-header { display: flex; align-items: flex-start; gap: 16px; margin-bottom: 16px; }
+        .card-icon { width: 40px; height: 40px; background: var(--color-primary-light); color: var(--color-primary); border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+        .card-icon.warning { background: var(--color-warning-light); color: var(--color-warning); }
+        .card-icon.success { background: var(--color-success-light); color: var(--color-success); }
+        .card-title { font-size: 16px; font-weight: 600; margin-bottom: 2px; }
+        .card-meta { font-size: 13px; color: var(--color-text-muted); }
+
+        .content-list { list-style: none; margin: 16px 0; }
+        .content-list li { display: flex; align-items: flex-start; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--color-border-light); font-size: 15px; color: var(--color-text-secondary); }
+        .content-list li:last-child { border-bottom: none; }
+        .content-list li::before { content: ''; width: 6px; height: 6px; background: var(--color-primary); border-radius: 50%; margin-top: 8px; flex-shrink: 0; }
+        .content-list li strong { color: var(--color-text); font-weight: 600; }
+
+        .highlight-box { background: linear-gradient(135deg, var(--color-text) 0%, #374151 100%); color: white; padding: 24px; border-radius: var(--radius-lg); margin: 24px 0; position: relative; }
+        .highlight-box p { font-size: 18px; font-weight: 500; padding-left: 16px; }
+        .highlight-box::before { content: ''; position: absolute; top: 16px; left: 16px; width: 4px; height: calc(100% - 32px); background: var(--color-primary); border-radius: 2px; }
+
+        /* --- Two Columns --- */
+        .two-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 24px 0; }
+        .col-card { background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-lg); overflow: hidden; }
+        .col-card-header { padding: 16px; font-weight: 600; font-size: 14px; }
+        .col-card-header.dark { background: var(--color-text); color: white; }
+        .col-card-header.primary { background: var(--color-primary); color: white; }
+        .col-card-body { padding: 16px; font-size: 14px; color: var(--color-text-secondary); }
+
+        /* --- Case Studies & Inputs --- */
+        .case-card { background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-lg); margin-bottom: 16px; overflow: hidden; }
+        .case-header { display: flex; align-items: center; gap: 12px; padding: 16px 20px; background: var(--color-border-light); border-bottom: 1px solid var(--color-border); }
+        .case-number { width: 28px; height: 28px; background: var(--color-primary); color: white; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: 13px; }
+        .case-title { font-weight: 600; font-size: 14px; }
+        .case-body { padding: 20px; }
+        .case-consigne { background: var(--color-bg); padding: 16px; border-radius: var(--radius-md); font-size: 14px; color: var(--color-text-secondary); font-style: italic; border-left: 3px solid var(--color-primary); margin-bottom: 20px; }
+
+        /* Inputs */
+        .input-group { margin-bottom: 16px; }
+        .input-label { display: block; font-size: 13px; font-weight: 600; color: var(--color-text); margin-bottom: 6px; }
+        .input-textarea { width: 100%; padding: 12px; border: 1px solid var(--color-border); border-radius: var(--radius-md); font-family: var(--font-family); font-size: 14px; color: var(--color-text); background: #FFFFFF; resize: vertical; min-height: 80px; transition: border-color 0.2s, box-shadow 0.2s; }
+        .input-textarea:focus { outline: none; border-color: var(--color-primary); box-shadow: 0 0 0 3px var(--color-primary-light); }
+        
+        .action-row { display: flex; justify-content: space-between; align-items: center; margin-top: 16px; padding-top: 16px; border-top: 1px dashed var(--color-border); }
+        
+        .correction-content { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 16px; margin-top: 16px; font-size: 14px; color: var(--color-text-secondary); animation: fadeIn 0.3s ease; }
+        .correction-content p { margin-bottom: 8px; }
+
+        /* --- Buttons --- */
+        .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 10px 20px; font-family: var(--font-family); font-size: 14px; font-weight: 500; border-radius: var(--radius-md); cursor: pointer; transition: all var(--transition); text-decoration: none; border: none; }
+        .btn-sm { padding: 8px 16px; font-size: 13px; }
+        .btn svg { width: 16px; height: 16px; }
+        .btn-primary { background: var(--color-primary); color: white; }
+        .btn-primary:hover { background: var(--color-primary-dark); }
+        .btn-success { background: var(--color-success); color: white; }
+        .btn-secondary { background: var(--color-surface); color: var(--color-text); border: 1px solid var(--color-border); }
+        .btn-secondary:hover { background: var(--color-border-light); }
+        .btn-lg { padding: 14px 28px; font-size: 15px; }
+
+        /* --- Prompts & Resources --- */
+        .prompt-box { background: var(--color-warning-light); border: 1px solid #FDE68A; border-radius: var(--radius-lg); padding: 24px; margin: 24px 0; }
+        
+        .prompt-box h4, .embed-card h4 { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; }
+        .prompt-box h4 svg { width: 20px; height: 20px; }
+        
+        .prompt-content { background: rgba(255,255,255,0.6); border: 1px dashed #d97706; padding: 16px; border-radius: 8px; font-family: monospace; font-size: 13px; color: #78350F; white-space: pre-wrap; margin-bottom: 16px; }
+        
+        .embed-card { background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-lg); padding: 32px; text-align: center; margin: 24px 0; }
+        .embed-icon { width: 40px; height: 40px; background: var(--color-primary-light); color: var(--color-primary); border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; margin: 0 auto 12px; }
+        .embed-icon svg { width: 20px; height: 20px; }
+
+        .section-nav { display: flex; justify-content: space-between; gap: 16px; margin-top: 48px; padding-top: 24px; border-top: 1px solid var(--color-border); }
+        .synthesis-box { background: var(--color-success-light); border: 1px solid #A7F3D0; border-radius: var(--radius-lg); padding: 20px 24px; margin: 24px 0; }
+        .synthesis-box li { display: flex; align-items: flex-start; gap: 10px; padding: 6px 0; font-size: 14px; color: #047857; }
+        .synthesis-box li::before { content: '✓'; font-weight: 600; }
+
+        /* --- Hero --- */
+        .hero { text-align: center; padding: 40px 0; }
+        .hero-title { font-size: 40px; font-weight: 700; line-height: 1.2; letter-spacing: -0.03em; color: var(--color-text); margin-bottom: 12px; }
+        .hero-title span { color: var(--color-primary); }
+        .hero-subtitle { font-size: 18px; color: var(--color-text-secondary); margin-bottom: 32px; max-width: 480px; margin-left: auto; margin-right: auto; }
+
+        @media (max-width: 1024px) {
+            .sidebar { transform: translateX(-100%); }
+            .sidebar.open { transform: translateX(0); }
+            .mobile-header { display: flex; }
+            .mobile-overlay.open { display: block; }
+            .main-content { margin-left: 0; padding-top: 60px; }
+            .content-wrapper { padding: 32px 20px; }
+        }
+        @media (max-width: 640px) {
+            .two-cols { grid-template-columns: 1fr; }
+            .section-nav { flex-direction: column; }
+            .section-nav .btn { width: 100%; }
+        }
+    </style>
+</head>
+<body>
+    <div class="app-layout">
+        <div class="mobile-header">
+            <div class="sidebar-logo">
+                <div class="sidebar-logo-icon">IA</div>
+                <div class="sidebar-logo-text">IA <span>contre</span> IA</div>
+            </div>
+            <button class="mobile-menu-btn" onclick="toggleSidebar()">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+            </button>
+        </div>
+
+        <div class="mobile-overlay" id="overlay" onclick="toggleSidebar()"></div>
+
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-logo">
+                    <div class="sidebar-logo-icon">IA</div>
+                    <div class="sidebar-logo-text">IA <span>contre</span> IA</div>
+                </div>
+            </div>
+            
+            <div class="lang-switch">
+                <button class="lang-btn active" id="btn-fr" onclick="setLang('fr')">FR</button>
+                <button class="lang-btn" id="btn-en" onclick="setLang('en')">EN</button>
+            </div>
+
+            <nav class="sidebar-nav">
+                <div class="nav-section-label">
+                    <span class="lang-fr">Formation</span>
+                    <span class="lang-en">Training</span>
+                </div>
+                <button class="nav-item active" onclick="showSection(0)" data-section="0">
+                    <span class="nav-item-icon"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" /></svg></span>
+                    <span class="lang-fr">Accueil</span>
+                    <span class="lang-en">Home</span>
+                </button>
+                <div class="nav-section-label" style="margin-top: 16px;">
+                    <span class="lang-fr">Séquences</span>
+                    <span class="lang-en">Sequences</span>
+                </div>
+                <button class="nav-item" onclick="showSection(1)" data-section="1"><span class="nav-item-icon">1</span>
+                    <span class="lang-fr">L'évaluation comme inférence</span>
+                    <span class="lang-en">Assessment as Inference</span>
+                </button>
+                <button class="nav-item" onclick="showSection(2)" data-section="2"><span class="nav-item-icon">2</span>
+                    <span class="lang-fr">Approche discursive</span>
+                    <span class="lang-en">Discursive Approach</span>
+                </button>
+                <button class="nav-item" onclick="showSection(3)" data-section="3"><span class="nav-item-icon">3</span>
+                    <span class="lang-fr">Approche structurelle</span>
+                    <span class="lang-en">Structural Approach</span>
+                </button>
+                <button class="nav-item" onclick="showSection(4)" data-section="4"><span class="nav-item-icon">4</span>
+                    <span class="lang-fr">Diagnostic et amélioration</span>
+                    <span class="lang-en">Diagnosis & Redesign</span>
+                </button>
+                <button class="nav-item" onclick="showSection(5)" data-section="5"><span class="nav-item-icon">5</span>
+                    <span class="lang-fr">Atelier pratique</span>
+                    <span class="lang-en">Workshop</span>
+                </button>
+                <button class="nav-item" onclick="showSection(6)" data-section="6"><span class="nav-item-icon"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg></span>
+                    <span class="lang-fr">Conclusion</span>
+                    <span class="lang-en">Conclusion</span>
+                </button>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="progress-wrapper">
+                    <div class="progress-label">
+                        <span class="lang-fr">Progression</span>
+                        <span class="lang-en">Progress</span>
+                        <span id="progress-text">0 / 7</span>
+                    </div>
+                    <div class="progress-bar"><div class="progress-fill" id="progress-fill" style="width: 0%"></div></div>
+                </div>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <div class="content-wrapper">
+
+                <section class="section active" id="section-0">
+                    <div class="hero">
+                        <div class="hero-badge">
+                            <span class="lang-fr">Formation 60 minutes</span>
+                            <span class="lang-en">60-minute training</span>
+                        </div>
+                        <h1 class="hero-title">
+                            IA <span>contre</span> IA
+                            <br>
+                            <span class="lang-en" style="font-size: 0.8em; opacity: 0.8;">AI vs. AI</span>
+                        </h1>
+                        <p class="hero-subtitle">
+                            <span class="lang-fr">Reconcevoir l'évaluation pour l'ère générative</span>
+                            <span class="lang-en">Redesigning assessment for the generative era</span>
+                        </p>
+                        <button class="btn btn-primary btn-lg" onclick="showSection(1)">
+                            <span class="lang-fr">Commencer</span>
+                            <span class="lang-en">Start</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" /></svg>
+                        </button>
+                    </div>
+                    <div class="card">
+                        <p class="lang-fr">Cet atelier vous invite à transformer l'intelligence artificielle en <strong>alliée pédagogique</strong>. Vous apprendrez à manipuler un <strong>prompt expert</strong> pour diagnostiquer la fragilité de vos supports et générer des alternatives résistantes.</p>
+                        <p class="lang-en">This workshop invites you to transform artificial intelligence into a <strong>pedagogical ally</strong>. You will learn how to use an <strong>expert prompt</strong> to diagnose the vulnerability of your materials and generate resilient alternatives.</p>
+                    </div>
+                    <div class="highlight-box">
+                        <p class="lang-fr">Vos évaluations résistent-elles à ChatGPT ?</p>
+                        <p class="lang-en">Do your assessments resist ChatGPT?</p>
+                    </div>
+                </section>
+
+                <section class="section" id="section-1">
+                    <div class="section-header">
+                        <div class="section-badge">
+                            <span class="lang-fr">Séquence 1</span>
+                            <span class="lang-en">Sequence 1</span>
+                        </div>
+                        <h1 class="section-title">
+                            <span class="lang-fr">L'évaluation comme inférence</span>
+                            <span class="lang-en">Assessment as Inference</span>
+                        </h1>
+                        <p class="section-subtitle">
+                            <span class="lang-fr">Comprendre la fragilité intrinsèque de l'évaluation.</span>
+                            <span class="lang-en">Understanding the intrinsic fragility of assessment.</span>
+                        </p>
+                    </div>
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-icon"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" /></svg></div>
+                            <div>
+                                <h3 class="card-title">
+                                    <span class="lang-fr">Le schéma de l'inférence</span>
+                                    <span class="lang-en">The Inference Schema</span>
+                                </h3>
+                            </div>
+                        </div>
+                        <ul class="content-list">
+                            <li class="lang-fr">L'apprentissage est <strong>invisible</strong> (dans la tête de l'élève).</li>
+                            <li class="lang-en">Learning is <strong>invisible</strong> (inside the student's head).</li>
+                            
+                            <li class="lang-fr">Nous observons des <strong>traces</strong> (copies, productions).</li>
+                            <li class="lang-en">We observe <strong>traces</strong> (essays, products).</li>
+                            
+                            <li class="lang-fr">Nous <strong>inférons</strong> l'apprentissage — avec des biais.</li>
+                            <li class="lang-en">We <strong>infer</strong> learning — with biases.</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-icon warning"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg></div>
+                            <div>
+                                <h3 class="card-title">
+                                    <span class="lang-fr">La disruption par l'IA</span>
+                                    <span class="lang-en">AI Disruption</span>
+                                </h3>
+                            </div>
+                        </div>
+                        <ul class="content-list">
+                            <li class="lang-fr"><strong>Ubiquité</strong> : intégrée partout (navigateurs, traitements de texte).</li>
+                            <li class="lang-en"><strong>Ubiquity</strong>: integrated everywhere (browsers, word processors).</li>
+                            
+                            <li class="lang-fr"><strong>Accessibilité</strong> : seuil d'entrée nul, conversationnel.</li>
+                            <li class="lang-en"><strong>Accessibility</strong>: zero entry threshold, conversational.</li>
+                            
+                            <li class="lang-fr"><strong>Multimodalité</strong> : texte, image, son.</li>
+                            <li class="lang-en"><strong>Multimodality</strong>: text, image, sound.</li>
+                        </ul>
+                    </div>
+                    <div class="section-nav">
+                        <button class="btn btn-secondary" onclick="showSection(0)">
+                            <span class="lang-fr">Accueil</span><span class="lang-en">Home</span>
+                        </button>
+                        <button class="btn btn-primary" onclick="showSection(2)">
+                            <span class="lang-fr">Suivant</span><span class="lang-en">Next</span>
+                        </button>
+                    </div>
+                </section>
+
+                <section class="section" id="section-2">
+                    <div class="section-header">
+                        <div class="section-badge">
+                            <span class="lang-fr">Séquence 2</span>
+                            <span class="lang-en">Sequence 2</span>
+                        </div>
+                        <h1 class="section-title">
+                            <span class="lang-fr">L'approche discursive</span>
+                            <span class="lang-en">The Discursive Approach</span>
+                        </h1>
+                        <p class="section-subtitle">
+                            <span class="lang-fr">Pourquoi les règles seules ne suffisent pas.</span>
+                            <span class="lang-en">Why rules alone are insufficient.</span>
+                        </p>
+                    </div>
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-icon"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg></div>
+                            <div>
+                                <h3 class="card-title">
+                                    <span class="lang-fr">Pratiques courantes</span>
+                                    <span class="lang-en">Common Practices</span>
+                                </h3>
+                            </div>
+                        </div>
+                        <ul class="content-list">
+                            <li class="lang-fr">Les « feux tricolores » (interdit / limité / libre).</li>
+                            <li class="lang-en">"Traffic Light" systems (banned / restricted / open).</li>
+                            
+                            <li class="lang-fr">Les chartes et formulaires d'auto-déclaration.</li>
+                            <li class="lang-en">Charters and self-declaration forms.</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-icon warning"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg></div>
+                            <div>
+                                <h3 class="card-title">
+                                    <span class="lang-fr">L'illusion de contrôle</span>
+                                    <span class="lang-en">The Illusion of Control</span>
+                                </h3>
+                            </div>
+                        </div>
+                        <p class="lang-fr">Une règle énoncée n'est pas une règle appliquée. Les détecteurs d'IA sont peu fiables (faux positifs). L'approche discursive ne change pas la <strong>structure</strong> de l'évaluation.</p>
+                        <p class="lang-en">A stated rule is not an enforced rule. AI detectors are unreliable (false positives). The discursive approach does not change the <strong>structure</strong> of the assessment.</p>
+                    </div>
+                    <div class="section-nav">
+                        <button class="btn btn-secondary" onclick="showSection(1)">
+                            <span class="lang-fr">Précédent</span><span class="lang-en">Previous</span>
+                        </button>
+                        <button class="btn btn-primary" onclick="showSection(3)">
+                            <span class="lang-fr">Suivant</span><span class="lang-en">Next</span>
+                        </button>
+                    </div>
+                </section>
+
+                <section class="section" id="section-3">
+                    <div class="section-header">
+                        <div class="section-badge">
+                            <span class="lang-fr">Séquence 3</span>
+                            <span class="lang-en">Sequence 3</span>
+                        </div>
+                        <h1 class="section-title">
+                            <span class="lang-fr">L'approche structurelle</span>
+                            <span class="lang-en">The Structural Approach</span>
+                        </h1>
+                        <p class="section-subtitle">
+                            <span class="lang-fr">Changer la nature de la tâche.</span>
+                            <span class="lang-en">Changing the nature of the task.</span>
+                        </p>
+                    </div>
+                    <div class="two-cols">
+                        <div class="col-card">
+                            <div class="col-card-header dark">
+                                🔒 <span class="lang-fr">Voie sécurisée</span><span class="lang-en">Secure Lane</span>
+                            </div>
+                            <div class="col-card-body">
+                                <p class="lang-fr"><strong>Certificatif</strong></p>
+                                <p class="lang-en"><strong>Summative</strong></p>
+                                <p class="lang-fr">IA interdite ou supervisée</p>
+                                <p class="lang-en">AI banned or supervised</p>
+                                <p class="lang-fr">Examen sur table, mode avion</p>
+                                <p class="lang-en">Pen & paper, airplane mode</p>
+                            </div>
+                        </div>
+                        <div class="col-card">
+                            <div class="col-card-header primary">
+                                🔓 <span class="lang-fr">Voie ouverte</span><span class="lang-en">Open Lane</span>
+                            </div>
+                            <div class="col-card-body">
+                                <p class="lang-fr"><strong>Formatif</strong></p>
+                                <p class="lang-en"><strong>Formative</strong></p>
+                                <p class="lang-fr">IA accompagnée</p>
+                                <p class="lang-en">AI supported</p>
+                                <p class="lang-fr">Consignes adaptées, métacognition</p>
+                                <p class="lang-en">Adapted prompts, metacognition</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-icon success"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M11 4a2 2 0 114 0v1a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-1a2 2 0 100 4h1a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-1a2 2 0 10-4 0v1a1 1 0 01-1 1H7a1 1 0 01-1-1v-3a1 1 0 00-1-1H4a2 2 0 110-4h1a1 1 0 001-1V7a1 1 0 011-1h3a1 1 0 001-1V4z" /></svg></div>
+                            <div>
+                                <h3 class="card-title">
+                                    <span class="lang-fr">Leviers de reconception</span>
+                                    <span class="lang-en">Redesign Levers</span>
+                                </h3>
+                            </div>
+                        </div>
+                        <ul class="content-list">
+                            <li class="lang-fr"><strong>Ancrage</strong> : lier au vécu de classe.</li>
+                            <li class="lang-en"><strong>Grounding</strong>: linked to classroom reality.</li>
+                            
+                            <li class="lang-fr"><strong>Triangulation</strong> : oral, brouillons, observation.</li>
+                            <li class="lang-en"><strong>Triangulation</strong>: oral, drafts, observation.</li>
+                            
+                            <li class="lang-fr"><strong>Métacognition</strong> : expliquer "comment j'ai fait".</li>
+                            <li class="lang-en"><strong>Metacognition</strong>: explaining "how I did it".</li>
+                        </ul>
+                    </div>
+                    <div class="section-nav">
+                        <button class="btn btn-secondary" onclick="showSection(2)">
+                            <span class="lang-fr">Précédent</span><span class="lang-en">Previous</span>
+                        </button>
+                        <button class="btn btn-primary" onclick="showSection(4)">
+                            <span class="lang-fr">Suivant</span><span class="lang-en">Next</span>
+                        </button>
+                    </div>
+                </section>
+
+                <section class="section" id="section-4">
+                    <div class="section-header">
+                        <div class="section-badge">
+                            <span class="lang-fr">Séquence 4</span>
+                            <span class="lang-en">Sequence 4</span>
+                        </div>
+                        <h1 class="section-title">
+                            <span class="lang-fr">Diagnostic et amélioration</span>
+                            <span class="lang-en">Diagnosis and Improvement</span>
+                        </h1>
+                        <p class="section-subtitle">
+                            <span class="lang-fr">Analysez les vulnérabilités et proposez des solutions.</span>
+                            <span class="lang-en">Analyze vulnerabilities and propose solutions.</span>
+                        </p>
+                    </div>
+
+                    <div class="card">
+                        <p class="lang-fr"><strong>Consigne :</strong> Pour chaque cas, saisissez votre analyse. Vous pourrez télécharger l'ensemble à la fin.</p>
+                        <p class="lang-en"><strong>Instructions:</strong> For each case, enter your analysis. You can download the full report at the end.</p>
+                    </div>
+
+                    <div class="case-card">
+                        <div class="case-header">
+                            <div class="case-number">1</div>
+                            <div class="case-title">
+                                <span class="lang-fr">Histoire – Analyse de document</span>
+                                <span class="lang-en">History – Document Analysis</span>
+                            </div>
+                        </div>
+                        <div class="case-body">
+                            <div class="case-consigne">
+                                <span class="lang-fr">« À partir de cette affiche de propagande (1936), identifiez la nature du document, décrivez les éléments visuels, expliquez les symboles et rédigez un paragraphe de synthèse. »</span>
+                                <span class="lang-en">"Based on this propaganda poster (1936), identify the nature of the document, describe the visual elements, explain the symbols, and write a summary paragraph."</span>
+                            </div>
+                            
+                            <div class="input-group">
+                                <label class="input-label" for="c1-vuln">
+                                    <span class="lang-fr">Pourquoi est-ce vulnérable à l'IA ?</span>
+                                    <span class="lang-en">Why is this vulnerable to AI?</span>
+                                </label>
+                                <textarea id="c1-vuln" class="input-textarea" placeholder="..."></textarea>
+                            </div>
+                            <div class="input-group">
+                                <label class="input-label" for="c1-amel">
+                                    <span class="lang-fr">Votre proposition d'amélioration :</span>
+                                    <span class="lang-en">Your redesign proposal:</span>
+                                </label>
+                                <textarea id="c1-amel" class="input-textarea" placeholder="..."></textarea>
+                            </div>
+
+                            <div class="action-row">
+                                <button class="btn btn-secondary btn-sm" onclick="toggleCorrection(this)">
+                                    <span class="lang-fr">Comparer avec le corrigé</span>
+                                    <span class="lang-en">Compare with answer key</span>
+                                </button>
+                            </div>
+                            
+                            <div class="correction-content" style="display:none;">
+                                <p class="lang-fr"><strong>Vulnérabilité :</strong> L'IA multimodale identifie le document et les symboles instantanément. La synthèse est délégable.</p>
+                                <p class="lang-en"><strong>Vulnerability:</strong> Multimodal AI identifies the document and symbols instantly. The summary is delegable.</p>
+                                
+                                <p class="lang-fr"><strong>Pistes :</strong> Dialogue fictif entre personnages d'époque, comparaison orale avec une affiche vue en classe.</p>
+                                <p class="lang-en"><strong>Ideas:</strong> Fictional dialogue between historical characters, oral comparison with a poster seen in class.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="case-card">
+                        <div class="case-header">
+                            <div class="case-number">2</div>
+                            <div class="case-title">
+                                <span class="lang-fr">Philosophie – Dissertation</span>
+                                <span class="lang-en">Philosophy – Essay</span>
+                            </div>
+                        </div>
+                        <div class="case-body">
+                            <div class="case-consigne">
+                                <span class="lang-fr">« La liberté consiste-t-elle à n'obéir qu'à soi-même ? Vous répondrez dans une dissertation structurée en trois parties. »</span>
+                                <span class="lang-en">"Does freedom consist of obeying only oneself? Answer in a structured three-part essay."</span>
+                            </div>
+
+                            <div class="input-group">
+                                <label class="input-label" for="c2-vuln">
+                                    <span class="lang-fr">Pourquoi est-ce vulnérable à l'IA ?</span>
+                                    <span class="lang-en">Why is this vulnerable to AI?</span>
+                                </label>
+                                <textarea id="c2-vuln" class="input-textarea" placeholder="..."></textarea>
+                            </div>
+                            <div class="input-group">
+                                <label class="input-label" for="c2-amel">
+                                    <span class="lang-fr">Votre proposition d'amélioration :</span>
+                                    <span class="lang-en">Your redesign proposal:</span>
+                                </label>
+                                <textarea id="c2-amel" class="input-textarea" placeholder="..."></textarea>
+                            </div>
+                            
+                            <div class="action-row">
+                                <button class="btn btn-secondary btn-sm" onclick="toggleCorrection(this)">
+                                    <span class="lang-fr">Comparer avec le corrigé</span>
+                                    <span class="lang-en">Compare with answer key</span>
+                                </button>
+                            </div>
+
+                            <div class="correction-content" style="display:none;">
+                                <p class="lang-fr"><strong>Vulnérabilité :</strong> Sujet classique, plan standard généré en quelques secondes.</p>
+                                <p class="lang-en"><strong>Vulnerability:</strong> Classic topic, standard outline generated in seconds.</p>
+                                
+                                <p class="lang-fr"><strong>Pistes :</strong> Rédaction du plan supervisée en classe, défense orale face à des objections, journal philosophique.</p>
+                                <p class="lang-en"><strong>Ideas:</strong> Supervised outline writing in class, oral defense against objections, philosophical journal.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="case-card">
+                        <div class="case-header">
+                            <div class="case-number">3</div>
+                            <div class="case-title">
+                                <span class="lang-fr">SVT – Compte rendu expérimental</span>
+                                <span class="lang-en">Biology – Lab Report</span>
+                            </div>
+                        </div>
+                        <div class="case-body">
+                            <div class="case-consigne">
+                                <span class="lang-fr">« Expliquez le protocole de l'expérience sur la fermentation alcoolique et présentez les résultats attendus. Concluez sur le rôle des levures. »</span>
+                                <span class="lang-en">"Explain the protocol for the alcoholic fermentation experiment and present the expected results. Conclude on the role of yeast."</span>
+                            </div>
+
+                            <div class="input-group">
+                                <label class="input-label" for="c3-vuln">
+                                    <span class="lang-fr">Pourquoi est-ce vulnérable à l'IA ?</span>
+                                    <span class="lang-en">Why is this vulnerable to AI?</span>
+                                </label>
+                                <textarea id="c3-vuln" class="input-textarea" placeholder="..."></textarea>
+                            </div>
+                            <div class="input-group">
+                                <label class="input-label" for="c3-amel">
+                                    <span class="lang-fr">Votre proposition d'amélioration :</span>
+                                    <span class="lang-en">Your redesign proposal:</span>
+                                </label>
+                                <textarea id="c3-amel" class="input-textarea" placeholder="..."></textarea>
+                            </div>
+                            
+                            <div class="action-row">
+                                <button class="btn btn-secondary btn-sm" onclick="toggleCorrection(this)">
+                                    <span class="lang-fr">Comparer avec le corrigé</span>
+                                    <span class="lang-en">Compare with answer key</span>
+                                </button>
+                            </div>
+
+                            <div class="correction-content" style="display:none;">
+                                <p class="lang-fr"><strong>Vulnérabilité :</strong> Protocole standard. Les "résultats attendus" dispensent de faire l'expérience.</p>
+                                <p class="lang-en"><strong>Vulnerability:</strong> Standard protocol. "Expected results" removes the need to do the experiment.</p>
+                                
+                                <p class="lang-fr"><strong>Pistes :</strong> Exiger photos horodatées, données brutes avec erreurs, oral d'explication à un pair.</p>
+                                <p class="lang-en"><strong>Ideas:</strong> Require timestamped photos, raw data with errors, oral explanation to a peer.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="embed-card">
+                        <div class="embed-icon"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg></div>
+                        <h4>
+                            <span class="lang-fr">Sauvegarder votre travail</span>
+                            <span class="lang-en">Save your work</span>
+                        </h4>
+                        <p>
+                            <span class="lang-fr">Téléchargez vos réponses au format texte.</span>
+                            <span class="lang-en">Download your answers as a text file.</span>
+                        </p>
+                        <button class="btn btn-primary" onclick="exportAnswers()">
+                            <span class="lang-fr">Télécharger mes réponses (.txt)</span>
+                            <span class="lang-en">Download my answers (.txt)</span>
+                        </button>
+                    </div>
+
+                    <div class="section-nav">
+                        <button class="btn btn-secondary" onclick="showSection(3)">
+                            <span class="lang-fr">Précédent</span><span class="lang-en">Previous</span>
+                        </button>
+                        <button class="btn btn-primary" onclick="showSection(5)">
+                            <span class="lang-fr">Suivant</span><span class="lang-en">Next</span>
+                        </button>
+                    </div>
+                </section>
+
+                <section class="section" id="section-5">
+                    <div class="section-header">
+                        <div class="section-badge">
+                            <span class="lang-fr">Séquence 5</span>
+                            <span class="lang-en">Sequence 5</span>
+                        </div>
+                        <h1 class="section-title">
+                            <span class="lang-fr">Atelier pratique</span>
+                            <span class="lang-en">Workshop</span>
+                        </h1>
+                        <p class="section-subtitle">
+                            <span class="lang-fr">Utilisez le prompt expert pour vos propres évaluations.</span>
+                            <span class="lang-en">Use the expert prompt for your own assessments.</span>
+                        </p>
+                    </div>
+
+                    <div class="prompt-box">
+                        <h4><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" /></svg>
+                            <span class="lang-fr">Prompt Expert (Version courte)</span>
+                            <span class="lang-en">Expert Prompt (Short Version)</span>
+                        </h4>
+                        <div class="prompt-content" id="expert-prompt-text">Rôle : Tu es un concepteur expert spécialisé dans l'intégrité académique et la conception d'évaluations résistantes à l'IA générative.
+
+Tâche :
+1. Infère la discipline, le niveau et les objectifs d'apprentissage à partir de l'évaluation que je vais te fournir.
+2. Pour chaque question/consigne, évalue le degré de vulnérabilité à l'IA (Pourquoi est-ce facile pour une IA ?).
+3. Génère 5 à 10 alternatives structurelles plus résistantes (modification de la tâche, ancrage, oralité...).
+4. Sur demande, développe les consignes pour les élèves ou une grille d'évaluation pour une des pistes retenues.
+
+Attends que je te donne l'évaluation pour commencer.</div>
+                        <button class="btn btn-primary btn-sm" onclick="copyText('expert-prompt-text', this)">
+                            <span class="lang-fr">Copier le prompt</span>
+                            <span class="lang-en">Copy prompt</span>
+                        </button>
+                    </div>
+
+                    <div class="card">
+                        <p class="lang-fr"><strong>Étapes :</strong> Copiez le prompt ci-dessus dans votre chatbot. Collez ensuite votre sujet d'évaluation. Analysez les résultats.</p>
+                        <p class="lang-en"><strong>Steps:</strong> Copy the prompt above into your chatbot. Then paste your assessment topic. Analyze the results.</p>
+                    </div>
+
+                    <div class="section-nav">
+                        <button class="btn btn-secondary" onclick="showSection(4)">
+                            <span class="lang-fr">Précédent</span><span class="lang-en">Previous</span>
+                        </button>
+                        <button class="btn btn-primary" onclick="showSection(6)">
+                            <span class="lang-fr">Suivant</span><span class="lang-en">Next</span>
+                        </button>
+                    </div>
+                </section>
+
+                <section class="section" id="section-6">
+                    <div class="section-header">
+                        <div class="section-badge">
+                            <span class="lang-fr">Conclusion</span>
+                            <span class="lang-en">Conclusion</span>
+                        </div>
+                        <h1 class="section-title">
+                            <span class="lang-fr">Ressources & Prompt Expert</span>
+                            <span class="lang-en">Resources & Expert Prompt</span>
+                        </h1>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-icon"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" /></svg></div>
+                            <div>
+                                <h3 class="card-title">
+                                    <span class="lang-fr">Prompt Expert de Conception (Version Complète)</span>
+                                    <span class="lang-en">Expert Design Prompt (Full Version)</span>
+                                </h3>
+                                <p class="card-meta">
+                                    <span class="lang-fr">Le prompt ultime pour transformer vos évaluations</span>
+                                    <span class="lang-en">The ultimate prompt to transform your assessments</span>
+                                </p>
+                            </div>
+                        </div>
+                        <p class="lang-fr" style="margin-bottom: 16px;">Voici le prompt complet à utiliser pour approfondir votre travail de conception. Il inclut les instructions en anglais (pour une meilleure performance du modèle) et en français.</p>
+                        <p class="lang-en" style="margin-bottom: 16px;">Here is the full prompt to use for deepening your design work. It includes instructions in English (for better model performance) and French.</p>
+                        
+                        <div class="prompt-content" id="final-prompt-text" style="max-height: 400px; overflow-y: auto;">[ENGLISH] Prompt for analysing and adapting assessment exercises in a generative AI context.
+For communication purposes, the prompt is in English. In any case, the prompt requires the chatbot to interact in the main language of the document or assessment provided.
+▶ Paste the following instructions into the chatbot of your choice.
+
+[FRANCAIS] Instructions pour analyser et adapter des exercices d’évaluation dans un contexte d’IA générative.
+Pour des raisons de communication, les instructions sont en anglais. Toujours est-il qu’elles demandent au chatbot d’interagir dans la langue principale du document ou de l’évaluation proposés.
+▶ Collez les instructions suivantes dans le chatbot de votre choix.
+
+----- PROMPT -----
+
+# Role
+You are an Expert Instructional Designer specialising in **Academic Integrity** and the design of assessments that are resistant to Generative AI.
+
+# Objective
+Analyse an existing assessment task submitted by the user and produce a revised version, transforming it from "AI-vulnerable" to an "AI-resistant" learning experience. You will ensure the assessment authentically verifies the learner's **Competence** by distinguishing between **Knowledge** (concepts), **Skills** (application), and **Attitudes** (behaviors/values).
+
+# Working Language
+Respond **exclusively** in the primary language used in the assessment instruction text. If the language is ambiguous, default to the Learning Outcomes' language.
+
+# Design Framework (AI-Resistant Principles)
+Apply these principles throughout the redesign:
+* **No use of Generative AI:** Students should not be instructed to use generative AI.
+* **No use of non authorised online tools:** Students should not be instructed to use online tools and platforms that have not been approved by the school.
+* **Competence-Driven:** Design tasks that specifically target the KSA model. Ensure *Knowledge* is applied, *Skills* are demonstrated live or through process, and *Attitudes* are reflected upon.
+* **Process-Centred:** Value drafts, logic, and iteration over the final product.
+* **Contextualised:** Root tasks in specific, local, or personal realities AI cannot access.
+* **Metacognitive:** Require reflection on the learning process.
+* **Multimodal:** Combine text, audio, visual, or physical outputs.
+* **Inclusive:** Ensure designs are accessible to students with diverse needs.
+* **Supervised Validation:** Include modalities ensuring authenticity (e.g., oral defence).
+
+---
+
+# Interaction Workflow
+**CRITICAL INSTRUCTION:** You must follow this process sequentially. **Do NOT generate the next phase until the user explicitly confirms.** Check your output history; if you have not received a specific user selection, stop writing immediately after the current phase.
+
+## PHASE 1: Intake & Vulnerability Analysis
+1.  **Check Input:** If the user has not provided an assessment, request it and **stop**.
+2.  **Competence Mapping:** Identify the Subject and Level. Deconstruct the Intended Learning Outcomes into **Knowledge**, **Skills**, and **Attitudes**. Identify which dimension is currently being assessed.
+3.  **Vulnerability & Competence Audit:** Create a table: `[Assessment Component | K/S/A Focus | Reason for Vulnerability]`. Highlight if the vulnerability exists because the task over-relies on Knowledge rather than Skills/Attitude.
+4.  **Summary:** Provide a brief prose summary of the analysis.
+5.  **NEXT STEP:** End your response *only* with this question: *"I have analysed the vulnerability. Shall I proceed to generate redesign options?"*
+
+## PHASE 2: Redesign Options (Wait for User Confirmation)
+*Constraint:* Do not start this phase unless the user has said "Yes" or "Proceed" to Phase 1.
+1.  **Develop Options:** Create **3 distinct** redesign archetypes (Low Workload, Medium Workload, High Workload).
+2.  **Options Table:** Present these in a table:
+    * **Option # & Name**
+    * **Pedagogical Approach**
+    * **Resilient Activities** (What prevents AI cheating?)
+    * **Teacher/Student Workload** (High/Med/Low)
+3.  **NEXT STEP:** End your response with: *"Please enter the Option Number (1-3) you would like to develop into a full assessment plan, or ask me for more options."*
+
+## PHASE 3: Final Blueprint (Wait for User Selection)
+*Constraint:* Do not start this phase unless the user has selected a specific number.
+1.  **Develop Blueprint:** Detail the selected option into a step-by-step student journey.
+2.  **Final Table:** List the student tasks:
+    * **Step/Task**
+    * **Targeted Competence (K/S/A)**
+    * **Why it is AI-Resistant**
+    * **Residual Vulnerability & Mitigation Strategy**
+    * **Est. Time (Student)**
+3.  **Implementation Check:** List 2-3 "Watch-outs", specifically focusing on how to objectively grade subjective **Attitudes** and complex **Skills**."</div>
+
+                        <button class="btn btn-primary" onclick="copyText('final-prompt-text', this)">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3" /></svg>
+                            <span class="lang-fr">Copier le Prompt Complet</span>
+                            <span class="lang-en">Copy Full Prompt</span>
+                        </button>
+                    </div>
+
+                    <div style="margin-top: 48px; border-top: 1px solid var(--color-border); padding-top: 32px;">
+                        <div style="margin-bottom: 24px;">
+                            <h4 style="font-size: 15px; font-weight: 600; margin-bottom: 8px; color: var(--color-text);">Contact</h4>
+                            <p style="font-size: 14px; color: var(--color-text-secondary); line-height: 1.6;">
+                                <strong>François Jourde</strong><br>
+                                Pedagogical Development Unit<br>
+                                Office of the Secretary-General of the European Schools<br>
+                                <a href="mailto:francois.jourde@eursc.eu" style="color: var(--color-primary); text-decoration: none;">francois.jourde@eursc.eu</a>
+                            </p>
+                        </div>
+
+                        <div style="display: flex; align-items: center; gap: 12px; font-size: 13px; color: var(--color-text-muted);">
+                            <a href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener">
+                                <img alt="Licence Creative Commons" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" />
+                            </a>
+                            <span>
+                                <span class="lang-fr">Ce travail est mis à disposition sous licence <a href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener" style="color: inherit; text-decoration: underline;">CC BY-SA 4.0</a>.</span>
+                                <span class="lang-en">This work is licensed under a <a href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener" style="color: inherit; text-decoration: underline;">CC BY-SA 4.0</a> license.</span>
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="section-nav">
+                        <button class="btn btn-secondary" onclick="showSection(5)">
+                            <span class="lang-fr">Précédent</span><span class="lang-en">Previous</span>
+                        </button>
+                        <button class="btn btn-primary" onclick="showSection(0)">
+                            <span class="lang-fr">Retour accueil</span><span class="lang-en">Back to Home</span>
+                        </button>
+                    </div>
+                </section>
+
+            </div>
+        </main>
+    </div>
+
+    <script>
+        let currentSection = 0;
+        const totalSections = 7;
+        let visitedSections = new Set([0]);
+        let currentLang = 'fr'; // Default language
+
+        // Language Switching Logic
+        function setLang(lang) {
+            currentLang = lang;
+            if (lang === 'en') {
+                document.body.classList.add('en-mode');
+                document.getElementById('btn-en').classList.add('active');
+                document.getElementById('btn-fr').classList.remove('active');
+                document.title = "AI vs AI - Training";
+            } else {
+                document.body.classList.remove('en-mode');
+                document.getElementById('btn-fr').classList.add('active');
+                document.getElementById('btn-en').classList.remove('active');
+                document.title = "IA contre IA - Formation";
+            }
+            // Mettre à jour les textes des boutons dynamiques si nécessaire
+            updateButtons();
+        }
+
+        function updateButtons() {
+            // Re-appliquer les états des boutons de correction qui peuvent avoir été changés
+            document.querySelectorAll('.correction-content').forEach(el => {
+                const btn = el.previousElementSibling.querySelector('.action-row button') || el.previousElementSibling;
+                // Ce bouton a déjà des spans intérieurs pour gérer la langue, donc pas besoin de modif JS complexe
+                // Sauf si on veut reset le texte "Masquer..." vs "Voir..."
+                // Pour simplifier, on laisse l'utilisateur ré-cliquer si il change de langue en cours de route.
+            });
+        }
+
+        function showSection(index) {
+            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+            document.getElementById(`section-${index}`).classList.add('active');
+            
+            document.querySelectorAll('.nav-item').forEach((item, i) => {
+                item.classList.remove('active');
+                if (visitedSections.has(i) && i !== index) item.classList.add('completed');
+                else item.classList.remove('completed');
+            });
+            document.querySelector(`.nav-item[data-section="${index}"]`).classList.add('active');
+            
+            visitedSections.add(index);
+            currentSection = index;
+            updateProgress();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            closeSidebar();
+        }
+
+        function updateProgress() {
+            const progress = (visitedSections.size / totalSections) * 100;
+            document.getElementById('progress-fill').style.width = `${progress}%`;
+            document.getElementById('progress-text').textContent = `${visitedSections.size} / ${totalSections}`;
+        }
+
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('open');
+            document.getElementById('overlay').classList.toggle('open');
+        }
+
+        function closeSidebar() {
+            document.getElementById('sidebar').classList.remove('open');
+            document.getElementById('overlay').classList.remove('open');
+        }
+
+        function toggleCorrection(btn) {
+            const row = btn.parentElement;
+            const content = row.nextElementSibling;
+            
+            // Textes pour FR et EN
+            const txtShow = {
+                fr: "Comparer avec le corrigé",
+                en: "Compare with answer key"
+            };
+            const txtHide = {
+                fr: "Masquer le corrigé",
+                en: "Hide answer key"
+            };
+
+            if (content.style.display === 'none') {
+                content.style.display = 'block';
+                // On injecte les spans pour garder le switch dynamique
+                btn.innerHTML = `<span class="lang-fr">${txtHide.fr}</span><span class="lang-en">${txtHide.en}</span>`;
+                btn.classList.add('btn-primary');
+                btn.classList.remove('btn-secondary');
+            } else {
+                content.style.display = 'none';
+                btn.innerHTML = `<span class="lang-fr">${txtShow.fr}</span><span class="lang-en">${txtShow.en}</span>`;
+                btn.classList.remove('btn-primary');
+                btn.classList.add('btn-secondary');
+            }
+        }
+
+        // Fonction générique pour copier le contenu d'un ID
+        function copyText(elementId, btnElement) {
+            const text = document.getElementById(elementId).innerText;
+            navigator.clipboard.writeText(text).then(() => {
+                const originalHtml = btnElement.innerHTML; // On garde le HTML (spans)
+                
+                // Feedback temporaire
+                btnElement.innerHTML = `<span class="lang-fr">Copié !</span><span class="lang-en">Copied!</span>`;
+                btnElement.classList.add('btn-success');
+                
+                setTimeout(() => {
+                    btnElement.innerHTML = originalHtml;
+                    btnElement.classList.remove('btn-success');
+                }, 2000);
+            }).catch(err => alert('Erreur de copie. Sélectionnez le texte manuellement.'));
+        }
+
+        function exportAnswers() {
+            const c1v = document.getElementById('c1-vuln').value || "";
+            const c1a = document.getElementById('c1-amel').value || "";
+            const c2v = document.getElementById('c2-vuln').value || "";
+            const c2a = document.getElementById('c2-amel').value || "";
+            const c3v = document.getElementById('c3-vuln').value || "";
+            const c3a = document.getElementById('c3-amel').value || "";
+
+            const date = new Date().toLocaleDateString(currentLang === 'fr' ? 'fr-FR' : 'en-GB');
+            
+            let content = "";
+
+            if (currentLang === 'fr') {
+                content = `ATELIER IA CONTRE IA - MES RÉPONSES\nDate : ${date}\n-----------------------------------\n\n`;
+                content += `CAS 1 : HISTOIRE\nVulnérabilité :\n${c1v || "Non renseigné"}\n\nAmélioration :\n${c1a || "Non renseigné"}\n\n-----------------------------------\n\n`;
+                content += `CAS 2 : PHILOSOPHIE\nVulnérabilité :\n${c2v || "Non renseigné"}\n\nAmélioration :\n${c2a || "Non renseigné"}\n\n-----------------------------------\n\n`;
+                content += `CAS 3 : SVT\nVulnérabilité :\n${c3v || "Non renseigné"}\n\nAmélioration :\n${c3a || "Non renseigné"}\n`;
+            } else {
+                content = `AI vs AI WORKSHOP - MY ANSWERS\nDate: ${date}\n-----------------------------------\n\n`;
+                content += `CASE 1: HISTORY\nVulnerability:\n${c1v || "Not specified"}\n\nRedesign:\n${c1a || "Not specified"}\n\n-----------------------------------\n\n`;
+                content += `CASE 2: PHILOSOPHY\nVulnerability:\n${c2v || "Not specified"}\n\nRedesign:\n${c2a || "Not specified"}\n\n-----------------------------------\n\n`;
+                content += `CASE 3: BIOLOGY\nVulnerability:\n${c3v || "Not specified"}\n\nRedesign:\n${c3a || "Not specified"}\n`;
+            }
+
+            const blob = new Blob([content], { type: 'text/plain' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = currentLang === 'fr' ? 'mes-reponses-ia.txt' : 'my-answers-ai.txt';
+            a.click();
+            window.URL.revokeObjectURL(url);
+        }
+
+        // Init
+        updateProgress();
+    </script>
+</body>
+</html>
