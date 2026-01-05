@@ -43,12 +43,9 @@
         }
 
         /* --- Language Switching Logic --- */
-        /* Par défaut (body sans classe) : FR visible, EN caché */
         .lang-en { display: none !important; }
-        
-        /* Quand body a la classe 'en-mode' : FR caché, EN visible */
         body.en-mode .lang-fr { display: none !important; }
-        body.en-mode .lang-en { display: block !important; } /* Block par défaut, ajusté inline si span */
+        body.en-mode .lang-en { display: block !important; }
         body.en-mode span.lang-en { display: inline !important; }
         
         .lang-switch {
@@ -167,9 +164,18 @@
         /* --- Two Columns --- */
         .two-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 24px 0; }
         .col-card { background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-lg); overflow: hidden; }
-        .col-card-header { padding: 16px; font-weight: 600; font-size: 14px; }
-        .col-card-header.dark { background: var(--color-text); color: white; }
-        .col-card-header.primary { background: var(--color-primary); color: white; }
+        
+        /* Updated Headers for Sequence 3 - Softer & Identical */
+        .col-card-header { 
+            padding: 16px; 
+            font-weight: 600; 
+            font-size: 14px;
+            /* Soft Blue Style for both */
+            background: var(--color-primary-light); 
+            color: var(--color-primary-dark);
+            border-bottom: 1px solid var(--color-border-light);
+        }
+        
         .col-card-body { padding: 16px; font-size: 14px; color: var(--color-text-secondary); }
 
         /* --- Case Studies & Inputs --- */
@@ -495,8 +501,8 @@
                     </div>
                     <div class="two-cols">
                         <div class="col-card">
-                            <div class="col-card-header dark">
-                                🔒 <span class="lang-fr">Voie sécurisée</span><span class="lang-en">Secure Lane</span>
+                            <div class="col-card-header">
+                                <span class="lang-fr">Voie sécurisée</span><span class="lang-en">Secure Lane</span>
                             </div>
                             <div class="col-card-body">
                                 <p class="lang-fr"><strong>Certificatif</strong></p>
@@ -508,8 +514,8 @@
                             </div>
                         </div>
                         <div class="col-card">
-                            <div class="col-card-header primary">
-                                🔓 <span class="lang-fr">Voie ouverte</span><span class="lang-en">Open Lane</span>
+                            <div class="col-card-header">
+                                <span class="lang-fr">Voie ouverte</span><span class="lang-en">Open Lane</span>
                             </div>
                             <div class="col-card-body">
                                 <p class="lang-fr"><strong>Formatif</strong></p>
