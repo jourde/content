@@ -10,12 +10,12 @@
 
 <div style="text-align:center; margin-top: 1.5rem;">
   <div id="qr" style="display:inline-block;"></div>
-  <p style="margin-top:0.75rem; font-size:0.9rem; opacity:0.7;">https://www.linkedin.com/in/jourde/e.dev</p>
+  <p style="margin-top:0.75rem; font-size:0.9rem; opacity:0.7;">https://jourde.github.io/training/2026/ludovia-ch.md</p>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/qrcodejs/qrcode.min.js"></script>
 <script>
   new QRCode(document.getElementById("qr"), {
-    text: "https://www.linkedin.com/in/jourde",
+    text: "https://jourde.github.io/training/2026/ludovia-ch.md",
     width: 500,
     height: 500,
     colorDark: "#000000",
