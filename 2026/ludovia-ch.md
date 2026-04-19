@@ -197,7 +197,7 @@ C'est la fabrication d'un **outil numérique utile qui résout bien un seul prob
 
 ---
 
-## Gabarits de prompts (1/2)
+## Gabarits de prompts
 
 **Démarrage d'un projet**
 > "Développe une application monopage en HTML. Contexte : [contexte]. Fonctionnalités : [comportement attendu]."
@@ -205,19 +205,13 @@ C'est la fabrication d'un **outil numérique utile qui résout bien un seul prob
 **Correction d'erreur**
 > "La fonctionnalité [X] ne fonctionne plus après que j'ai ajouté [Y]. Comportement attendu : [décrire]. Comportement observé : [décrire]. Code actuel : [coller]. Identifie l'origine du problème et propose une correction minimale."
 
--- duration: 2m
-
----
-
-## Gabarits de prompts (2/2)
-
 **Accessibilité**
 > "Révise ce code pour garantir la conformité aux WCAG 2.1 niveau AA (norme EN 301 549). Assure : HTML sémantique, navigation complète au clavier, indicateurs de focus visibles, rapports de contraste conformes, gestion accessible des formulaires, ARIA si nécessaire, mise en page adaptative jusqu'à un zoom de 200 %, compatibilité avec les lecteurs d'écran et prise en charge du contenu multilingue. Voici le code actuel : [coller]."
 
 **Audit du code**
 > "Analyse ce code et produis un rapport structuré couvrant : (1) erreurs ou bugs potentiels, (2) failles de sécurité, (3) problèmes de performance, (4) lisibilité et maintenabilité, (5) dépendances externes et leurs risques. Pour chaque point, indique le niveau de priorité (critique / majeur / mineur) et propose une correction concrète. Voici le code : [coller]."
 
--- duration: 1m30s
+-- duration: 5m
 
 ---
 
