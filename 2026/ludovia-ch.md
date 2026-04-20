@@ -57,22 +57,13 @@
 
 Terme popularisé par **Andrej Karpathy** en 2025.
 
-**Coder en langage naturel** : décrire ce qu'on veut obtenir et laisser une IA générer le code.
+**Coder en langage naturel** avec un agent conversationnel : décrire ce qu'on veut obtenir et laisser une IA générer le code.
+Faire confiance à l'IA et "*oublier que le code existe*" (Karpathy).
 
-Ce n'est **pas** du no-code au sens traditionnel.  
-C'est du **code généré par dialogue** : l'humain pilote l'intention, l'IA exécute techniquement.
+Démarche adaptée aux projets simples, où l'autonomie et la vitesse priment (≠ développement web professionnel à grande échelle).
 
--- duration: 2m
 
----
-
-## Deux approches
-
-**Vibe coding "pur"**: faire confiance à l'IA et "*oublier que le code existe*" (Karpathy). Démarche adaptée aux projets simples, où la vitesse prime.
-- Ce n'est pas du développement web professionnel à grande échelle.
-- C'est la fabrication d'un outil numérique utile qui résout bien un problème.
-
-**≠ Développement assisté par IA**: utiliser l'IA sur des tâches spécifiques de projets avancés.
+> "*C'est la fin du prototypage, bienvenue dans le "Produitypage" [...]. Le prototype fusionne avec le produit, il n'y a plus aucune étape entre les deux, la conception se confond avec la production. [...] La seule chose que tu dois savoir faire, c'est parler de ton design et décrire ton design à l'aide du langage. Immense pouvoir donné à ceux qui maîtrisent les mots. Et bien sûr, le plus important : tu dois savoir ce que tu veux, tu dois avoir une idée."* ([S. Vial, 20.04.2026](https://www.linkedin.com/feed/update/urn:li:activity:7451819708770729984/))
 
 -- duration: 2m
 
@@ -98,9 +89,7 @@ Cette capacité reste **dépendante des grandes infrastructures numériques**, m
 
 ## Choisir un outil
 
-- Système d'IA générative
-	- généraliste
-	- spécialisé
+- Système d'IA générative généraliste | spécialisé
 
 Les systèmes d'IA évoluent constamment. Le choix dépend du projet et du contexte institutionnel.
 
@@ -276,8 +265,8 @@ Démonstration
     if (el && typeof QRCode !== "undefined") {
       new QRCode(el, {
         text: "https://github.com/jourde/learning-designer",
-        width: 200,
-        height: 200,
+        width: 350,
+        height: 350,
         colorDark: "#000000",
         colorLight: "#ffffff"
       });
@@ -285,7 +274,7 @@ Démonstration
   })();
 </script>
 
--- duration: 18m
+-- duration: 15m
 
 ---
 
@@ -299,7 +288,7 @@ Démonstration
 
 > ***"Pensez à votre contexte de travail. Y a-t-il un outil que vous auriez voulu avoir — et qui n'existe pas, ou qui n'existe pas sous la forme dont vous auriez besoin ?"***
 
--- duration: 12m
+-- duration: 10m
 
 ---
 
