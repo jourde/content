@@ -268,13 +268,36 @@ Cela compte aussi quand on travaille avec un LLM :
 
 ---
 
-## Illustration 2 : le Learning Designer
+## Illustration 2 : le(s) Learning Designer(s)
 
 Démonstration
 
 - Besoin initial  
 - Démonstration
 
+**Réplique de l'UCL Learning Designer**
+
+<div style="text-align:center; margin-top: 1.5rem;">
+  <div id="qr-learning-designer" style="display:inline-block;"></div>
+  <p style="margin-top:0.75rem; font-size:0.9rem; opacity:0.7;">https://github.com/jourde/learning-designer-revised</p>
+</div>
+<script>
+  (function() {
+    var el = document.getElementById("qr-learning-designer");
+    if (el && typeof QRCode !== "undefined") {
+      new QRCode(el, {
+        text: "https://github.com/jourde/learning-designer-revised",
+        width: 350,
+        height: 350,
+        colorDark: "#000000",
+        colorLight: "#ffffff"
+      });
+    }
+  })();
+</script>
+
+
+**Outil original**
 <div style="text-align:center; margin-top: 1.5rem;">
   <div id="qr-learning-designer" style="display:inline-block;"></div>
   <p style="margin-top:0.75rem; font-size:0.9rem; opacity:0.7;">https://github.com/jourde/learning-designer</p>
