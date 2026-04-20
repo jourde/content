@@ -183,12 +183,12 @@ L'outil reste léger, portable, facile à partager.
 
 ## Rester petit
 
-Un outil petit est plus facile à comprendre, corriger, modifier — ou réécrire entièrement si nécessaire.
+Un outil petit est plus facile à comprendre, corriger, modifier, ou réécrire entièrement si nécessaire.
 
 Cela compte aussi quand on travaille avec un LLM :
 - L'outil entier tient dans la fenêtre de contexte
 - Le modèle le comprend rapidement
-- On peut le régénérer ou le refactoriser (restructurer sans changer ce qu'il fait) en une seule opération
+- Le modèle peut le régénérer ou le refactoriser (restructurer sans changer ce qu'il fait) en une seule opération
 
 -- duration: 2m
 
