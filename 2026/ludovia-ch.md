@@ -49,7 +49,9 @@
 
 # Le vibe coding
 
--- duration: 0s
+*Ces quatre repères balisent notre parcours. Mais avant d'entrer dans la démarche, établissons une base commune : qu'est-ce que le vibe coding — et pourquoi ce terme mérite-t-il qu'on s'y attarde ?*
+
+-- duration: 20s
 
 ---
 
@@ -83,7 +85,9 @@ Cette capacité reste **dépendante des grandes infrastructures numériques**, m
 
 # Démarche
 
--- duration: 0s
+*Ce glissement — de la consommation vers la création — donne tout son sens au vibe coding. Il reste la question pratique : concrètement, par où commence-t-on ?*
+
+-- duration: 20s
 
 ---
 
@@ -99,6 +103,8 @@ Les systèmes d'IA évoluent constamment. Le choix dépend du projet et du conte
 
 ## Boucle de travail typique (démonstration)
 
+*Vous avez peut-être déjà pratiqué cette boucle intuitivement, sans la nommer. Voici comment elle se formalise.*
+
 | #   | Étape                    | Description                                                                                                                                                                                       |
 | --- | ------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | 1   | **Décrire l'objectif**   | Un prompt en langage naturel : "*Crée une application monopage présentant un formulaire d'auto-évaluation à 5 critères pour un oral d'anglais au lycée, avec une barre de progression visuelle.*" |
@@ -113,7 +119,9 @@ Les systèmes d'IA évoluent constamment. Le choix dépend du projet et du conte
 
 # Anatomie d'un outil HTML
 
--- duration: 0s
+*La boucle est là — décrire, générer, tester, affiner. Reste une question : qu'est-ce qu'on construit, exactement ? Un regard sous le capot avant de passer à la démonstration.*
+
+-- duration: 20s
 
 ---
 
@@ -181,7 +189,7 @@ Cela compte aussi quand on travaille avec un LLM :
 - Le modèle le comprend rapidement
 - Le modèle peut le régénérer ou le refactoriser (restructurer sans changer ce qu'il fait) en une seule opération
 
--- duration: 2m
+-- duration: 1m30s
 
 ---
 
@@ -193,7 +201,7 @@ Cela compte aussi quand on travaille avec un LLM :
 - **Collaborer** — plusieurs personnes peuvent contribuer au même projet
 - **Documenter** — l'historique des modifications trace les décisions prises au fil du temps
 
--- duration: 2m30s
+-- duration: 2m
 
 ---
 
@@ -207,6 +215,16 @@ Cela compte aussi quand on travaille avec un LLM :
 | **Front-end statique**      | La complexité augmente les risques et réduit le contrôle                                         | *Rester sur des fichiers HTML + CSS + JS locaux, sans serveur ni compte utilisateur*        |
 
 -- duration: 2m
+
+---
+
+## À vous
+
+> ***Lequel de ces points de vigilance vous concerne le plus directement dans votre contexte ?***
+
+1-2 minutes secondes avec votre voisin·e.
+
+-- duration: 1m30s
 
 ---
 
@@ -224,17 +242,19 @@ Cela compte aussi quand on travaille avec un LLM :
 **Audit du code**
 > "Analyse ce code et produis un rapport structuré couvrant : (1) erreurs ou bugs potentiels, (2) failles de sécurité, (3) problèmes de performance, (4) lisibilité et maintenabilité, (5) dépendances externes et leurs risques. Pour chaque point, indique le niveau de priorité (critique / majeur / mineur) et propose une correction concrète. Voici le code : [coller]."
 
--- duration: 5m30s
+-- duration: 4m30s
 
 ---
 
 # En pratique
 
--- duration: 0s
+*Concepts, démarche, anatomie, vigilances, modèles d'instructions — les éléments sont en place. Voyons maintenant ce qu'ils produisent concrètement.*
+
+-- duration: 20s
 
 ---
 
-## Illustration (1) : l'interface de diaporama utilisée ici
+## Illustration 1 : l'interface de diaporama utilisée ici
 
 **[Markdown Slide Deck](https://github.com/jourde/markdown-slidedeck)** — application monopage légère et accessible.
 
@@ -244,11 +264,11 @@ Cela compte aussi quand on travaille avec un LLM :
 - Navigation au clavier, recherche intégrée
 - Indicateur de progression en forme de ligne de train
 
--- duration: 2m
+-- duration: 1m30s
 
 ---
 
-## Illustration (2) : le Learning Designer
+## Illustration 2 : le Learning Designer
 
 Démonstration
 
@@ -280,7 +300,9 @@ Démonstration
 
 # Pour aller plus loin
 
--- duration: 0s
+*Vous venez de voir ce que cette démarche peut produire dans un contexte particulier. La question qui s'ouvre maintenant, c'est : dans votre contexte, qu'est-ce qui manque ?*
+
+-- duration: 20s
 
 ---
 
@@ -288,7 +310,7 @@ Démonstration
 
 > ***"Pensez à votre contexte de travail. Y a-t-il un outil que vous auriez voulu avoir — et qui n'existe pas, ou qui n'existe pas sous la forme dont vous auriez besoin ?"***
 
--- duration: 10m
+-- duration: 8m
 
 ---
 
@@ -299,6 +321,18 @@ Démonstration
 **2. L'IA produit vite, mais ne valide pas.**
 
 **3. L'outil le plus utile n'est pas le plus sophistiqué.**
+
+-- duration: 2m
+
+---
+
+## Mon intention
+
+Notez une action concrète que vous voulez tenter d'ici 30 jours :
+
+> ***Un outil que j'aimerais prototyper, même simple et imparfait :***
+> 
+> - - - - - - - - - - - - - - - - - - - - - 
 
 -- duration: 2m
 
@@ -316,5 +350,3 @@ Démonstration
 - [francois@jourde.dev](mailto:francois@jourde.dev) | [linkedin.com/in/jourde/](https://www.linkedin.com/in/jourde/)
 
 -- duration: 1m30s
-
-[def]: https://ressourcerie.forge.apps.education.fr/
