@@ -96,13 +96,15 @@ Cette capacité reste **dépendante des grandes infrastructures numériques**, m
 
 ---
 
-## choisir un outil
+## Choisir un outil
 
 - Système d'IA générative
 	- généraliste
 	- spécialisé
 
-Les systèmes d'IA évoluent constamment.
+Les systèmes d'IA évoluent constamment. Le choix dépend du projet et du contexte institutionnel.
+
+-- duration: 1m
 
 ---
 
