@@ -1,6 +1,6 @@
 # Développer une application pédagogique avec une IA générative (vibe coding)
 
-**LUDVIA#CH - ExplorCamp — François Jourde**
+**LUDVIA#CH 2026 - ExplorCamp — François Jourde**
 
 -- duration: 0s
 
@@ -10,12 +10,12 @@
 
 <div style="text-align:center; margin-top: 1.5rem;">
   <div id="qr" style="display:inline-block;"></div>
-  <p style="margin-top:0.75rem; font-size:0.9rem; opacity:0.7;">https://github.com/jourde/training/blob/main/2026/ludovia-ch.md</p>
+  <p style="margin-top:0.75rem; font-size:0.9rem; opacity:0.7;">https://jourde.github.io/training/2026/ludovia-ch.md</p>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/qrcodejs/qrcode.min.js"></script>
 <script>
   new QRCode(document.getElementById("qr"), {
-    text: "https://github.com/jourde/training/blob/main/2026/ludovia-ch.md",
+    text: "https://jourde.github.io/training/2026/ludovia-ch.md",
     width: 500,
     height: 500,
     colorDark: "#000000",
@@ -33,11 +33,11 @@
 
 ---
 
-## À l'issue de cette session, vous serez en mesure de…
+## Objectifs
 
 ### ➜ Se repérer dans ce qu'on appelle vibe coding
 ### ➜ Identifier les points de vigilance techniques et institutionnels
-### ➜ Voir un résultat concret : le Learning Designer
+### ➜ Examiner un résultat concret : le Learning Designer
 ### ➜ Repartir avec des idées et des ressources
 
 -- duration: 0s
@@ -54,7 +54,7 @@
 
 Terme popularisé par **Andrej Karpathy** en 2025.
 
-Décrire en langage naturel ce qu'on veut obtenir → laisser une IA générer le code → tester → corriger → itérer
+**Coder en langage naturel** : décrire ce qu'on veut obtenir et laisser une IA générer le code.
 
 Ce n'est **pas** du no-code au sens traditionnel.  
 C'est du **code généré par dialogue** : l'humain pilote l'intention, l'IA exécute techniquement.
@@ -65,43 +65,74 @@ C'est du **code généré par dialogue** : l'humain pilote l'intention, l'IA ex�
 
 ## Deux approches
 
-**Vibe coding "pur"** — Faire confiance à l'IA sans lire le code. Karpathy : "oublier que le code existe." Adapté aux projets jetables, où la vitesse prime.
+**Vibe coding "pur"**: faire confiance à l'IA et "*oublier que le code existe*" (Karpathy). Démarche adaptée aux projets jetables, où la vitesse prime.
+- Ce n'est pas du développement web professionnel à grande échelle.
+- C'est la fabrication d'un outil numérique utile qui résout bien un seul problème.
 
-**Développement assisté par IA** — L'IA comme partenaire : on guide, on relit, on teste, on assume. Adapté aux projets avancés.
+**Développement assisté par IA**: utiliser l'IA sur des tâches spécifiques de projets avancés.
 
 -- duration: 2m
 
 ---
 
-## De la consommation à la production
+## De la consommation à la création
 
-Le vibe coding fait passer le numérique éducatif d'une logique d'**usage** à une logique de **création**.
+Le vibe coding fait passer le numérique (éducatif) d'une logique d'**usage** à une logique de **création**.
 
-Il permet à des **non-développeurs** de produire des outils adaptés à leur contexte, en exerçant leur **créativité** et leur **expertise professionnelle**.
+Il permet aux **non-développeurs** de produire des outils adaptés à leur contexte, en exerçant leur **créativité** et leur **expertise professionnelle**.
 
-Même si cette capacité reste **dépendante des grandes infrastructures numériques**, elle transforme déjà la posture professionnelle : il ne s'agit plus seulement de choisir des outils, mais de **construire un environnement d'action plus ajusté à ses besoins**.
+Cette capacité reste **dépendante des grandes infrastructures numériques**, mais elle transforme la posture professionnelle : ne plus seulement choisir des outils, mais **construire un environnement d'action plus ajusté à ses besoins**.
 
 -- duration: 4m
 
 ---
 
-## La boucle de travail en vibe coding
+# Démarche
 
-| # | Étape | Description |
-|---|-------|-------------|
-| 1 | **Décrire l'objectif** | Un prompt en langage naturel : *"Crée un formulaire d'auto-évaluation à 5 critères, avec une barre de progression visuelle."* |
-| 2 | **L'IA génère le code** | Elle interprète la demande et produit une première version. |
-| 3 | **Exécuter et observer** | On ouvre le fichier dans le navigateur pour vérifier que le formulaire s'affiche et fonctionne comme prévu. |
-| 4 | **Corriger et affiner** | Si le résultat est incomplet, on précise : *"Ça fonctionne, mais les critères doivent être modifiables par l'enseignant sans toucher au code."* |
-| 5 | **Itérer** | Cette boucle — décrire, générer, tester, affiner — se répète jusqu'à ce que l'outil corresponde au besoin pédagogique. |
+-- duration: 0s
+
+---
+
+## choisir un outil
+
+- Agent conversationnel généraliste
+- Agent conversationnel spécialisé
+
+Les systèmes d'IA évoluent constamment.
+
+---
+
+## La boucle de travail pour vibe coder une application HTML
+
+| #   | Étape                    | Description                                                                                                                                     |
+| --- | ------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------- |
+| 1   | **Décrire l'objectif**   | Un prompt en langage naturel : *"Crée un formulaire d'auto-évaluation à 5 critères, avec une barre de progression visuelle."*                   |
+| 2   | **L'IA génère le code**  | Elle interprète la demande et produit une première version.                                                                                     |
+| 3   | **Exécuter et observer** | On ouvre le fichier dans le navigateur pour vérifier que le formulaire s'affiche et fonctionne comme prévu.                                     |
+| 4   | **Corriger et affiner**  | Si le résultat est incomplet, on précise : *"Ça fonctionne, mais les critères doivent être modifiables par l'enseignant sans toucher au code."* |
+| 5   | **Itérer**               | Cette boucle — décrire, générer, tester, affiner — se répète jusqu'à ce que l'outil corresponde au besoin pédagogique.                          |
 
 -- duration: 2m
 
 ---
 
-## Anatomie d'un outil HTML
+# Anatomie d'un outil HTML
 
-Un seul fichier : `outil.html`
+-- duration: 0s
+
+---
+
+## Les principes sous-jacents
+
+Optimiser pour : **simplicité, portabilité, rapidité, collaboration facile avec les LLMs.**
+
+Des outils faciles à générer, à exécuter, à partager, à modifier.
+
+-- duration: 1m30s
+
+---
+
+## Un seul fichier : `outil.html`
 
 | Couche | Rôle |
 |---|---|
@@ -122,7 +153,7 @@ Un seul fichier : `outil.html`
 
 ---
 
-## Anatomie d'un outil HTML — dépendances et CDN
+## Dépendances et CDN
 
 Une **dépendance** est une bibliothèque externe qui ajoute une capacité à l'outil : graphiques, sélecteur de dates, rendu Markdown…
 
@@ -146,7 +177,7 @@ L'outil reste léger, portable, facile à partager.
 
 ---
 
-## Anatomie d'un outil HTML — rester petit
+## Rester petit
 
 Un outil petit est plus facile à comprendre, corriger, modifier — ou réécrire entièrement si nécessaire.
 
@@ -156,19 +187,6 @@ Cela compte aussi quand on travaille avec un LLM :
 - On peut le régénérer ou le refactoriser (restructurer sans changer ce qu'il fait) en une seule opération
 
 -- duration: 1m
-
----
-
-## Les principes sous-jacents
-
-Optimiser pour : **simplicité, portabilité, rapidité, collaboration facile avec les LLMs.**
-
-Des outils faciles à générer, à exécuter, à partager, à modifier.
-
-Ce n'est pas du développement web professionnel à grande échelle.
-C'est la fabrication d'un **outil numérique utile qui résout bien un seul problème**.
-
--- duration: 1m30s
 
 ---
 
@@ -184,14 +202,14 @@ C'est la fabrication d'un **outil numérique utile qui résout bien un seul prob
 
 ---
 
-## Points de vigilance : sécurité et données
+## ⚠️ Points de vigilance : sécurité et données
 
-| Point de vigilance | Risque | Règle pratique |
-|---|---|---|
-| **Données personnelles** | Tout outil traitant des données personnelles est soumis au RGPD (Suisse : LPD/FADP) | Ne jamais coller de données nominatives dans un prompt. Tester avec des données fictives. |
-| **Applications connectées** | Un outil qui envoie des données vers un serveur externe crée un vecteur de risque | Préférer une architecture locale sans requête réseau |
-| **Sécurité du code** | Le code généré par IA peut contenir des failles inaperçues (injections, dépendances vulnérables) | Ne pas déployer sur un réseau d'établissement sans revue par un responsable informatique |
-| **Front-end statique** | La complexité augmente les risques et réduit le contrôle | Rester sur des fichiers HTML + CSS + JS locaux, sans serveur ni compte utilisateur |
+| Point de vigilance          | Risque                                                                                           | Règle pratique                                                                              |
+| --------------------------- | ------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------- |
+| **Données personnelles**    | Tout outil traitant des données personnelles est soumis au RGPD (Suisse : LPD/FADP)              | *Ne jamais coller de données nominatives dans un prompt. Tester avec des données fictives.* |
+| **Applications connectées** | Un outil qui envoie des données vers un serveur externe crée un vecteur de risque                | *Préférer une architecture locale sans requête réseau*                                      |
+| **Sécurité du code**        | Le code généré par IA peut contenir des failles inaperçues (injections, dépendances vulnérables) | *Ne pas déployer sur un réseau d'établissement sans revue par un responsable informatique*  |
+| **Front-end statique**      | La complexité augmente les risques et réduit le contrôle                                         | *Rester sur des fichiers HTML + CSS + JS locaux, sans serveur ni compte utilisateur*        |
 
 -- duration: 2m
 
@@ -211,7 +229,7 @@ C'est la fabrication d'un **outil numérique utile qui résout bien un seul prob
 **Audit du code**
 > "Analyse ce code et produis un rapport structuré couvrant : (1) erreurs ou bugs potentiels, (2) failles de sécurité, (3) problèmes de performance, (4) lisibilité et maintenabilité, (5) dépendances externes et leurs risques. Pour chaque point, indique le niveau de priorité (critique / majeur / mineur) et propose une correction concrète. Voici le code : [coller]."
 
--- duration: 5m
+-- duration: 5m30s
 
 ---
 
@@ -273,7 +291,7 @@ Démonstration
 
 ## Discussion
 
-> "Pensez à votre contexte de travail. Y a-t-il un outil que vous auriez voulu avoir — et qui n'existe pas, ou qui n'existe pas sous la forme dont vous auriez besoin ?"
+> ***"Pensez à votre contexte de travail. Y a-t-il un outil que vous auriez voulu avoir — et qui n'existe pas, ou qui n'existe pas sous la forme dont vous auriez besoin ?"***
 
 -- duration: 12m
 
