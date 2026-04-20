@@ -317,12 +317,13 @@ Démonstration
 
 ## Ressources
 ### Exemples
-- [Prototypes personnels (F. Jourde) sur GitHub](https://github.com/jourde)
-- [La Ressourcerie de la Forge des Communs Numériques Éducatifs](https://ressourcerie.forge.apps.education.fr/)
+- [Prototypes personnels (F. Jourde) sur GitHub](https://github.com/jourde) #FR #EN
+- [La Ressourcerie de la Forge des Communs Numériques Éducatifs](https://ressourcerie.forge.apps.education.fr/) #FR
+- https://github.com/simonw/tools #EN
 ### Conseils
-- [Page de conseils par Yann Houry](https://www.ralentirtravaux.com/apps/vibe-coding/)
+- [Page de conseils par Yann Houry](https://www.ralentirtravaux.com/apps/vibe-coding/) #FR
 ### Outils
-- [https://github.com/roboco-io/awesome-vibecoding](https://github.com/roboco-io/awesome-vibecoding)
+- [https://github.com/roboco-io/awesome-vibecoding](https://github.com/roboco-io/awesome-vibecoding) #EN
 ### Contact pour questions ou échanges ultérieurs
 - [francois@jourde.dev](mailto:francois@jourde.dev) | [linkedin.com/in/jourde/](https://www.linkedin.com/in/jourde/)
 
