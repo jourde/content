@@ -16,8 +16,8 @@
 <script>
   new QRCode(document.getElementById("qr"), {
     text: "https://jourde.github.io/training/2026/ludovia-ch.md",
-    width: 500,
-    height: 500,
+    width: 400,
+    height: 400,
     colorDark: "#000000",
     colorLight: "#ffffff"
   });
@@ -35,10 +35,13 @@
 
 ## Objectifs
 
-### ➜ Se repérer dans ce qu'on appelle vibe coding
-### ➜ Identifier les points de vigilance techniques et institutionnels
-### ➜ Examiner un résultat concret : le Learning Designer
-### ➜ Repartir avec des idées et des ressources
+➜ **Se repérer** dans ce qu'on appelle vibe coding
+
+➜ Identifier les **points de vigilance** techniques et institutionnels
+
+➜ Examiner un **résultat concret** : le Learning Designer
+
+➜ Repartir avec des **idées** et des **ressources**
 
 -- duration: 0s
 
@@ -65,11 +68,11 @@ C'est du **code généré par dialogue** : l'humain pilote l'intention, l'IA ex�
 
 ## Deux approches
 
-**Vibe coding "pur"**: faire confiance à l'IA et "*oublier que le code existe*" (Karpathy). Démarche adaptée aux projets jetables, où la vitesse prime.
+**Vibe coding "pur"**: faire confiance à l'IA et "*oublier que le code existe*" (Karpathy). Démarche adaptée aux projets simples, où la vitesse prime.
 - Ce n'est pas du développement web professionnel à grande échelle.
-- C'est la fabrication d'un outil numérique utile qui résout bien un seul problème.
+- C'est la fabrication d'un outil numérique utile qui résout bien un problème.
 
-**Développement assisté par IA**: utiliser l'IA sur des tâches spécifiques de projets avancés.
+**≠ Développement assisté par IA**: utiliser l'IA sur des tâches spécifiques de projets avancés.
 
 -- duration: 2m
 
@@ -77,7 +80,7 @@ C'est du **code généré par dialogue** : l'humain pilote l'intention, l'IA ex�
 
 ## De la consommation à la création
 
-Le vibe coding fait passer le numérique (éducatif) d'une logique d'**usage** à une logique de **création**.
+Le vibe coding fait passer le numérique (éducatif) d'une logique de **consommation** à une logique de **création**.
 
 Il permet aux **non-développeurs** de produire des outils adaptés à leur contexte, en exerçant leur **créativité** et leur **expertise professionnelle**.
 
@@ -95,24 +98,25 @@ Cette capacité reste **dépendante des grandes infrastructures numériques**, m
 
 ## choisir un outil
 
-- Agent conversationnel généraliste
-- Agent conversationnel spécialisé
+- Système d'IA générative
+	- généraliste
+	- spécialisé
 
 Les systèmes d'IA évoluent constamment.
 
 ---
 
-## La boucle de travail pour vibe coder une application HTML
+## Boucle de travail typique (démonstration)
 
-| #   | Étape                    | Description                                                                                                                                     |
-| --- | ------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------- |
-| 1   | **Décrire l'objectif**   | Un prompt en langage naturel : *"Crée un formulaire d'auto-évaluation à 5 critères, avec une barre de progression visuelle."*                   |
-| 2   | **L'IA génère le code**  | Elle interprète la demande et produit une première version.                                                                                     |
-| 3   | **Exécuter et observer** | On ouvre le fichier dans le navigateur pour vérifier que le formulaire s'affiche et fonctionne comme prévu.                                     |
-| 4   | **Corriger et affiner**  | Si le résultat est incomplet, on précise : *"Ça fonctionne, mais les critères doivent être modifiables par l'enseignant sans toucher au code."* |
-| 5   | **Itérer**               | Cette boucle — décrire, générer, tester, affiner — se répète jusqu'à ce que l'outil corresponde au besoin pédagogique.                          |
+| #   | Étape                    | Description                                                                                                                                                                                       |
+| --- | ------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 1   | **Décrire l'objectif**   | Un prompt en langage naturel : "*Crée une application monopage présentant un formulaire d'auto-évaluation à 5 critères pour un oral d'anglais au lycée, avec une barre de progression visuelle.*" |
+| 2   | **L'IA génère le code**  | Elle interprète la demande et produit une première version.                                                                                                                                       |
+| 3   | **Exécuter et observer** | On ouvre le fichier dans le navigateur pour vérifier que le formulaire s'affiche et fonctionne comme prévu.                                                                                       |
+| 4   | **Corriger et affiner**  | Si le résultat est incomplet, on précise : *"Les critères doivent être modifiables par l'enseignant."*                                                                                            |
+| 5   | **Itérer**               | Cette boucle — décrire, générer, tester, affiner — se répète jusqu'à ce que l'outil corresponde au besoin pédagogique.                                                                            |
 
--- duration: 2m
+-- duration: 5m
 
 ---
 
@@ -186,7 +190,7 @@ Cela compte aussi quand on travaille avec un LLM :
 - Le modèle le comprend rapidement
 - On peut le régénérer ou le refactoriser (restructurer sans changer ce qu'il fait) en une seule opération
 
--- duration: 1m
+-- duration: 2m
 
 ---
 
@@ -215,7 +219,7 @@ Cela compte aussi quand on travaille avec un LLM :
 
 ---
 
-## Gabarits de prompts
+## Exemples d'instructions
 
 **Démarrage d'un projet**
 > "Développe une application monopage en HTML. Contexte : [contexte]. Fonctionnalités : [comportement attendu]."
