@@ -319,7 +319,6 @@ Démonstration
 ### Exemples
 - [Prototypes personnels (F. Jourde) sur GitHub](https://github.com/jourde) #FR #EN
 - [La Ressourcerie de la Forge des Communs Numériques Éducatifs](https://ressourcerie.forge.apps.education.fr/) #FR
-- https://github.com/simonw/tools #EN
 ### Conseils
 - [Page de conseils par Yann Houry](https://www.ralentirtravaux.com/apps/vibe-coding/) #FR
 ### Outils
