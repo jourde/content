@@ -296,6 +296,7 @@ Démonstration
   })();
 </script>
 
+et :
 
 **Outil original**
 <div style="text-align:center; margin-top: 1.5rem;">
