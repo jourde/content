@@ -1,2 +1,2 @@
-# Pages, notes, ressources
+# Pages, notes, media & ressources
 
